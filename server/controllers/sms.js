@@ -60,7 +60,7 @@ module.exports = {
         .catch(error => res.status(400).send({ message: 'Recipient contact not found' }));
       })
       .catch(error => {
-        // console.log(error.message)
+        console.log(error.message)
         res.status(400).send(error)
       });
     }

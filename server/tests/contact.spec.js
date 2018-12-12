@@ -32,8 +32,11 @@ describe('CONTACT API', () => {
   
   try {
     after((done) => {
-      db.Contact.destroy({ where: {} })
-      .then(done())
+      db.Contact.destroy({ where: { phoneNumber: '07030293645' } })
+      .then(() => {
+        db.Contact.destroy({ where: { phoneNumber: '08064026851' } })
+        .then(done())
+      })
       .catch((error) => {
         console.log(error)
       })
