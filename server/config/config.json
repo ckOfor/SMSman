@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "oforchinedu",
+    "password": null,
+    "database": "sms-dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "oforchinedu",
+    "password": null,
+    "database": "sms-dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "oforchinedu",
+    "password": null,
+    "database": "sms-dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
