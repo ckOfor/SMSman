@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'contactId',
       onDelete: 'CASCADE',
     });
-  
+    
     Sms.belongsTo(models.Contact, {
       foreignKey: 'senderId',
       onDelete: 'CASCADE',
@@ -37,3 +37,4 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Sms;
 };
+

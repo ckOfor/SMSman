@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'contactId',
       as: 'sms',
     });
-  
+    
     Contact.hasMany(models.Sms, {
       foreignKey: 'senderId',
       as: 'sender'

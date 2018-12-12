@@ -1,17 +1,20 @@
 const Contact = require('../models').Contact;
 const Sms = require('../models').Sms;
+const helper = require('../helpers').helper;
 
 module.exports = {
   create(req, res) {
-    console.log(req.body)
-    return Contact
-    .create({
-      username: req.body.username,
-      phoneNumber: req.body.phoneNumber,
-    })
-    .then(contact =>
-      res.status(201).send(contact))
-    .catch(error => {res.status(400).send(error)});
+    if(helper.validateContactFields(req, res)){
+      console.log(req.body)
+      return Contact
+      .create({
+        username: req.body.username,
+        phoneNumber: req.body.phoneNumber,
+      })
+      .then(contact =>
+        res.status(200).send(contact))
+      .catch(error => {res.status(400).send(error)});
+    }
   },
   list(req, res) {
     return Contact
@@ -21,8 +24,14 @@ module.exports = {
         as: 'sms',
       }],
     })
-    .then(todos => res.status(200).send(todos))
-    .catch(error => res.status(400).send(error));
+    .then(todos => {
+      res.status(200).send(todos)
+      return next();
+    })
+    .catch(error => {
+      res.status(400).send(error)
+      return next();
+    });
   },
   retrieve(req, res) {
     return Contact
@@ -45,6 +54,7 @@ module.exports = {
   updateName(req, res) {
     if(req.body.username === undefined || req.body.username.length === 0) {
       res.status(400).send({ message: 'Username cannot be null' })
+      return next();
     }
     return Contact
     .findById(req.params.contactId, {
@@ -55,9 +65,10 @@ module.exports = {
     })
     .then(contact => {
       if (!contact) {
-        return res.status(404).send({
+        res.status(404).send({
           message: 'Contact Not Found',
         });
+        return next();
       }
       return contact
       .update({
@@ -81,9 +92,10 @@ module.exports = {
     })
     .then(contact => {
       if (!contact) {
-        return res.status(404).send({
+        res.status(404).send({
           message: 'Contact Not Found',
         });
+        return next();
       }
       return contact
       .update({
@@ -100,7 +112,7 @@ module.exports = {
     .then(todo => {
       if (!todo) {
         return res.status(400).send({
-          message: 'Contact Not Found',
+          message: 'Contact not found',
         });
       }
       return todo
